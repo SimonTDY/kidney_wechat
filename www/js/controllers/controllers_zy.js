@@ -58,7 +58,7 @@ angular.module('zy.controllers', ['ionic', 'kidney.services'])
                           thisDoctor = null
                         })
             socket = io.connect(CONFIG.socketUrl)
-                        // socket.emit('newUser',{user_name:response.results.name,user_id:data.results.userId});
+            socket.emit('newUser', {user_name: $scope.logOn.username, user_id: data.results.userId})
                         // socket.on('err',function(data){
                         //     console.log(data)
                         //     // $rootScope.$broadcast('receiveMessage',data);
