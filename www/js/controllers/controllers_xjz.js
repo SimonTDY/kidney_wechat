@@ -898,7 +898,7 @@ angular.module('xjz.controllers', ['ionic', 'kidney.services'])
             toBottom(true, 500)
             $scope.params.msgCount++
           })
-        },1500)
+        },500)
     } else {
       $scope.msgs.push(msg)
       toBottom(true, 200)
