@@ -874,7 +874,7 @@ angular.module('kidney', [
       }
     })
 
-  $urlRouterProvider.otherwise('/welcome')
+  // $urlRouterProvider.otherwise('/welcome')
 })
 
 // $httpProvider.interceptors提供http request及response的预处理
