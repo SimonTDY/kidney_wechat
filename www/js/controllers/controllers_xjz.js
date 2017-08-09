@@ -571,10 +571,10 @@ angular.module('xjz.controllers', ['ionic', 'kidney.services'])
 
   $scope.$on('keyboardshow', function (event, height) {
     $scope.params.helpDivHeight = height
-    toBottom(true, 100)
-        // setTimeout(function() {
-        //     $scope.scrollHandle.scrollBottom(true);
-        // }, 100);
+    // toBottom(true, 100)
+    setTimeout(function () {
+      $scope.scrollHandle.scrollBottom()
+    }, 100)
   })
   $scope.$on('keyboardhide', function (event) {
     $scope.params.helpDivHeight = 0
@@ -891,11 +891,14 @@ angular.module('xjz.controllers', ['ionic', 'kidney.services'])
     msg.direct = msg.fromID == $scope.params.UID ? 'send' : 'receive'
     if (msg.contentType == 'image') {
       msg.content.thumb = CONFIG.mediaUrl + msg.content['src_thumb']
-      $http.get(msg.content.thumb).then(function (data) {
-        $scope.msgs.push(msg)
-        toBottom(true, 600)
-        $scope.params.msgCount++
-      })
+      $timeout(function () {
+        $http.get(msg.content.thumb)
+          .then(function (data) {
+            $scope.msgs.push(msg)
+            toBottom(true, 500)
+            $scope.params.msgCount++
+          })
+      }, 500)
     } else {
       $scope.msgs.push(msg)
       toBottom(true, 200)
