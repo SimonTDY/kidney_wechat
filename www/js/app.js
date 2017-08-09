@@ -22,7 +22,11 @@ angular.module('kidney', [
   $ionicPlatform.ready(function () {
     socket = io.connect(CONFIG.socketUrl)
     Storage.rm('chatSender')
-
+    $ionicHistory.clearHistory()
+    $ionicHistory.nextViewOptions({
+      disableBack: true,
+      disableAnimate: true
+    })
     var temp = $location.absUrl().split('=')
         // alert(temp)
     if (angular.isDefined(temp[1]) == true) {
@@ -95,22 +99,10 @@ angular.module('kidney', [
               var errs = []
 
               if (state == 'testqrcode' || state == 'qrcode') {
-                $ionicHistory.nextViewOptions({
-                  disableBack: true,
-                  disableAnimate: true
-                })
                 $state.go('myqrcode')
               } else if (state == 'testnewsufferer' || state == 'newsufferer') {
-                $ionicHistory.nextViewOptions({
-                  disableBack: true,
-                  disableAnimate: true
-                })
                 $state.go('tab.patient')
               } else if (params.length > 1 && params[0] == 'doctor') {
-                $ionicHistory.nextViewOptions({
-                  disableBack: true,
-                  disableAnimate: true
-                })
                 if (params[1] == '13') { $state.go('tab.group-chat', {type: params[2], groupId: params[3], teamId: params[4]}) } else { $state.go('tab.detail', {type: params[2], chatId: params[3], counselId: params[4]}) }
               } else {
                 $q.all([
@@ -874,7 +866,7 @@ angular.module('kidney', [
       }
     })
 
-  // $urlRouterProvider.otherwise('/welcome')
+  $urlRouterProvider.otherwise('/welcome')
 })
 
 // $httpProvider.interceptors提供http request及response的预处理
