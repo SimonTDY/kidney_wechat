@@ -2949,7 +2949,13 @@ angular.module('zy.controllers', ['ionic', 'kidney.services'])
   }
 }])
 
-.controller('welcomeCtrl', ['$scope', '$state', function ($scope, $state) {
+.controller('welcomeCtrl', ['$scope', '$state', '$ionicHistory', function ($scope, $state, $ionicHistory) {
+  $ionicHistory.clearHistory()
+  $ionicHistory.nextViewOptions({
+    disableBack: true,
+    disableAnimate: true
+  })
+
   var width = window.screen.width
   var height = window.screen.height
 
