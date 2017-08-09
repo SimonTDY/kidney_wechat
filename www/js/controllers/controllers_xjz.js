@@ -1061,8 +1061,8 @@ angular.module('xjz.controllers', ['ionic', 'kidney.services'])
     $ionicHistory.nextViewOptions({
       disableBack: true
     })
-    if ($state.params.type == '1') $state.go('tab.doing')
-    else if ($state.params.type == '0') $state.go('tab.did')
+    if ($scope.params.type == '1') $state.go('tab.doing')
+    else if ($scope.params.type == '0') $state.go('tab.did')
     else $state.go('tab.groups', { type: '1' })
   }
 }])
