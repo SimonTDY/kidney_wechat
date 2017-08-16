@@ -28,6 +28,9 @@ angular.module('kidney', [
       disableAnimate: true
     })
     var temp = $location.absUrl().split('=')
+    var code = ''
+    var state = ''
+    var params = ''
         // alert(temp)
     if (temp[1]) {
       if (temp[2]) {
