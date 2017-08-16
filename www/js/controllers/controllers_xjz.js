@@ -1825,6 +1825,7 @@ angular.module('xjz.controllers', ['ionic', 'kidney.services'])
                         socket.emit('message', { msg: msgJson, to: PID, role: 'doctor'})
                             // socket.on('messageRes', function(data) {
                             // socket.off('messageRes');
+                        $ionicLoading.show({ template: '回复成功'})
                         socket.emit('disconnect')
                         setTimeout(function () {
                           $ionicLoading.hide()
