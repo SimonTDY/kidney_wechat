@@ -571,10 +571,10 @@ angular.module('xjz.controllers', ['ionic', 'kidney.services'])
 
   $scope.$on('keyboardshow', function (event, height) {
     $scope.params.helpDivHeight = height
-    toBottom(true, 100)
-        // setTimeout(function() {
-        //     $scope.scrollHandle.scrollBottom(true);
-        // }, 100);
+    // toBottom(true, 100)
+    setTimeout(function () {
+      $scope.scrollHandle.scrollBottom()
+    }, 100)
   })
   $scope.$on('keyboardhide', function (event) {
     $scope.params.helpDivHeight = 0
@@ -891,14 +891,14 @@ angular.module('xjz.controllers', ['ionic', 'kidney.services'])
     msg.direct = msg.fromID == $scope.params.UID ? 'send' : 'receive'
     if (msg.contentType == 'image') {
       msg.content.thumb = CONFIG.mediaUrl + msg.content['src_thumb']
-        $timeout(function(){
-          $http.get(msg.content.thumb)
-          .then(function(data){
+      $timeout(function () {
+        $http.get(msg.content.thumb)
+          .then(function (data) {
             $scope.msgs.push(msg)
             toBottom(true, 500)
             $scope.params.msgCount++
           })
-        },500)
+      }, 500)
     } else {
       $scope.msgs.push(msg)
       toBottom(true, 200)
@@ -1064,8 +1064,8 @@ angular.module('xjz.controllers', ['ionic', 'kidney.services'])
     $ionicHistory.nextViewOptions({
       disableBack: true
     })
-    if ($state.params.type == '1') $state.go('tab.doing')
-    else if ($state.params.type == '0') $state.go('tab.did')
+    if ($scope.params.type == '1') $state.go('tab.doing')
+    else if ($scope.params.type == '0') $state.go('tab.did')
     else $state.go('tab.groups', { type: '1' })
   }
 }])
@@ -1825,6 +1825,7 @@ angular.module('xjz.controllers', ['ionic', 'kidney.services'])
                         socket.emit('message', { msg: msgJson, to: PID, role: 'doctor'})
                             // socket.on('messageRes', function(data) {
                             // socket.off('messageRes');
+                        $ionicLoading.show({ template: '回复成功'})
                         socket.emit('disconnect')
                         setTimeout(function () {
                           $ionicLoading.hide()

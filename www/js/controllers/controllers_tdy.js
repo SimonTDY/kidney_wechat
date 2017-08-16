@@ -1838,19 +1838,14 @@ angular.module('tdy.controllers', ['ionic', 'kidney.services', 'ionic-datepicker
     var patientId = Pchat.sendBy
     Counsel.getStatus({doctorId: Storage.get('UID'), patientId: patientId})
         .then(function (data) {
-          Storage.set('consultId', data.result.consultId)
-          if (data.result.status == 1) {
-            $state.go('tab.detail', {chatId: patientId, type: 1, consultId: Storage.get('consultId')})
-          } else if (data.result.status == 0) {
-            $state.go('tab.detail', {chatId: patientId, type: 0, consultId: Storage.get('consultId')})
-          }
+          $state.go('tab.detail', {chatId: patientId, type: data.result.status, counselId: data.result.counselId})
         })
   }
 
     // 医生-医生 进入聊天：type：2
   getDChatDetail = function (Dchat) {
     console.log(Dchat.sendBy)
-    $state.go('tab.detail', {chatId: Dchat.sendBy, type: 2, consultId: 'DoctorChat'})
+    $state.go('tab.detail', {chatId: Dchat.sendBy, type: 2, counselId: 'DoctorChat'})
   }
 
     // 团队-医生  获取交流状态 [status]：1进行中；0已完成  进入聊天：[type]:1=进行中;2=已结束;

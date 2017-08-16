@@ -22,11 +22,18 @@ angular.module('kidney', [
   $ionicPlatform.ready(function () {
     socket = io.connect(CONFIG.socketUrl)
     Storage.rm('chatSender')
-
+    $ionicHistory.clearHistory()
+    $ionicHistory.nextViewOptions({
+      disableBack: true,
+      disableAnimate: true
+    })
     var temp = $location.absUrl().split('=')
+    var code = ''
+    var state = ''
+    var params = ''
         // alert(temp)
-    if (angular.isDefined(temp[1]) == true) {
-      if (angular.isDefined(temp[2]) == true) {
+    if (temp[1]) {
+      if (temp[2]) {
         var code = temp[1].split('&')[0]
         var state = temp[2].split('#')[0]
         var params = state.split('_')
@@ -78,6 +85,10 @@ angular.module('kidney', [
                                     // $scope.logStatus = "登录成功！";
               $ionicHistory.clearCache()
               $ionicHistory.clearHistory()
+              $ionicHistory.nextViewOptions({
+                disableBack: true,
+                disableAnimate: true
+              })
               User.getUserId({username: Storage.get('openid')}).then(function (data) {
                 if (angular.isDefined(data.phoneNo) == true) {
                   Storage.set('USERNAME', data.phoneNo)
@@ -94,9 +105,9 @@ angular.module('kidney', [
               var results = []
               var errs = []
 
-              if (state == 'testqrcode' || state == 'qrcode') {
+              if (state.indexOf('qrcode') !== -1) {
                 $state.go('myqrcode')
-              } else if (state == 'testnewsufferer' || state == 'newsufferer') {
+              } else if (state.indexOf('newsufferer') !== -1) {
                 $state.go('tab.patient')
               } else if (params.length > 1 && params[0] == 'doctor') {
                 if (params[1] == '13') { $state.go('tab.group-chat', {type: params[2], groupId: params[3], teamId: params[4]}) } else { $state.go('tab.detail', {type: params[2], chatId: params[3], counselId: params[4]}) }
@@ -862,7 +873,7 @@ angular.module('kidney', [
       }
     })
 
-  $urlRouterProvider.otherwise('/welcome')
+  // $urlRouterProvider.otherwise('/welcome')
 })
 
 // $httpProvider.interceptors提供http request及response的预处理
